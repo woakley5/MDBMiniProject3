@@ -10,26 +10,33 @@ import UIKit
 
 class NewSocialViewController: UIViewController {
 
+    var eventNameField: UITextField!
+    var eventDescriptionView: UITextView!
+    var datePicker: UIDatePicker!
+    var selectImageButton: UIButton!
+    var submitButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.navigationItem.title = "New Post"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNewPost))
+        
+        eventNameField = UITextField(frame: CGRect(x: 30, y: 100, width: view.frame.width - 60, height: 40))
+        eventNameField.placeholder = "Event Name"
+        view.addSubview(eventNameField)
+        
+        eventDescriptionView = UITextView(frame: CGRect(x: 30, y: 150, width: view.frame.width - 60, height: 100))
+        eventDescriptionView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        view.addSubview(eventDescriptionView)
+        
+        datePicker = UIDatePicker(frame: CGRect(x: 30, y: view.frame.height * 0.5, width: view.frame.width - 60, height: 200))
+        view.addSubview(datePicker)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @objc func cancelNewPost(){
+        self.dismiss(animated: true) {
+            print("Back to feed")
+        }
     }
-    */
-
 }
