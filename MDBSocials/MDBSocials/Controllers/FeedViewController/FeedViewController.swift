@@ -31,23 +31,17 @@ class FeedViewController: UIViewController {
         feedTableView.dataSource = self
         view.addSubview(feedTableView)
         feedTableView.register(FeedTableViewCell.self, forCellReuseIdentifier: "post")
-
+        
+        FirebaseDatabaseHelper.fetchPosts(withBlock: { posts in
+            self.posts.append(contentsOf: posts)
+            self.feedTableView.reloadData()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !FirebaseAuthHelper.isLoggedIn() {
             self.performSegue(withIdentifier: "showLogin", sender: self)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        FirebaseDatabaseHelper.listenForPosts(tableView: feedTableView, newPostBlock: { post in
-            print("New Post Loaded!")
-            print(post.eventName)
-            self.posts.append(post)
-            self.posts.reverse()
-            self.feedTableView.reloadData()
-        })
     }
     
     @objc func logOut(){
@@ -60,7 +54,6 @@ class FeedViewController: UIViewController {
     @objc func newPost(){
         self.performSegue(withIdentifier: "showNewSocial", sender: self)
     }
-
 }
 
 extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
@@ -74,14 +67,20 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! FeedTableViewCell
-        cell.awakeFromNib()
         let post = posts[indexPath.row]
-        cell.mainImageView.image = post.image
+        cell.awakeFromNib()
+        post.getPicture {
+            cell.mainImageView.image = post.image
+        }
+        cell.eventNameLabel.text = post.eventName
+        cell.eventDateLabel.text = post.date
+        cell.eventDesctiptionLabel.text = post.description
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 100.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -39,7 +39,7 @@ class NewSocialViewController: UIViewController {
         selectCameraImageButton.setTitle("Take Picture", for: .normal)
         selectCameraImageButton.setTitleColor(.blue, for: .normal)
         selectCameraImageButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
-        view.addSubview(selectCameraImageButton)
+        //view.addSubview(selectCameraImageButton)
         
         selectLibraryImageButton = UIButton(frame: CGRect(x: 30, y: 330, width: 150, height: 50))
         selectLibraryImageButton.setTitle("Select Picture", for: .normal)

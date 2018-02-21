@@ -21,7 +21,7 @@ class Post {
     var image: UIImage?
     var interested: [String]?
     
-    init(id: String, postDict: [String:Any]?, successBlock: @escaping () -> ()) {
+    init(id: String, postDict: [String:Any]?) {
         self.id = id
         if postDict != nil {
             if let date = postDict!["date"] as? String {
@@ -39,7 +39,6 @@ class Post {
             if let posterId = postDict!["posterId"] as? String {
                 self.posterId = posterId
             }
-            getPicture(withBlock: successBlock)
         }
     }
     

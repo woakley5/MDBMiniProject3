@@ -28,10 +28,10 @@ class FirebaseDatabaseHelper {
         }
     }
     
-    static func newPost(name: String, description: String, pictureURL: String, date: Date, completion: @escaping ()->()) {
+    static private func newPost(name: String, description: String, pictureURL: String, date: Date, completion: @escaping ()->()) {
         let posterId = FirebaseAuthHelper.getCurrentUser()?.uid
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd,yyyy at HH:mm"
+        dateFormatter.dateFormat = "MMM dd,yyyy at h:mm a"
         let dateString = dateFormatter.string(from: date)
         let postsRef = Database.database().reference().child("Posts")
         let newPost = ["name": name, "pictureURL": pictureURL, "posterId": posterId!, "description": description, "date": dateString] as [String : Any]
@@ -42,14 +42,13 @@ class FirebaseDatabaseHelper {
         completion()
     }
     
-    static func listenForPosts(tableView: UITableView, newPostBlock: @escaping (Post) -> ()){
+    static func fetchPosts(withBlock: @escaping ([Post]) -> ()){
         let ref = Database.database().reference()
         ref.child("Posts").observe(.childAdded, with: { (snapshot) in
-            let post = Post(id: snapshot.key, postDict: snapshot.value as! [String : Any]?) {
-                tableView.reloadData()
-            }
-            withBlock(post)
+            let post = Post(id: snapshot.key, postDict: snapshot.value as! [String : Any]?)
+            withBlock([post])
+            
         })
     }
-
+    
 }
