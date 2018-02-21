@@ -57,6 +57,10 @@ class SignupViewController: UIViewController {
         }
         else{
             print("Fields Missing")
+            let alertController = UIAlertController(title: "Fields Blank", message:
+                "Make sure you enter all required information.", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     

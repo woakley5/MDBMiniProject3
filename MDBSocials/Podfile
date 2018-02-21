@@ -12,6 +12,7 @@ target 'MDBSocials' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  pod 'MKSpinner'
   
   target 'MDBSocialsTests' do
     inherit! :search_paths

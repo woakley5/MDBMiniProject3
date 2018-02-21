@@ -38,6 +38,7 @@ class FeedViewController: UIViewController {
     
     @objc func logOut(){
         FirebaseAuthHelper.logOut(view: self) {
+            print("Logged out!")
             self.performSegue(withIdentifier: "showLogin", sender: self)
         }
     }

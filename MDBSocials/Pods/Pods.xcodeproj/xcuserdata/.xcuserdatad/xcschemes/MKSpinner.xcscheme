@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '13D4039A77793B2C99F24B456B556A59'
-               BlueprintName = 'Pods-MDBSocials'
+               BlueprintIdentifier = '03CD34D4F6027923EE7F784D29E0B7B2'
+               BlueprintName = 'MKSpinner'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods-MDBSocials.framework'>
+               BuildableName = 'MKSpinner.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
