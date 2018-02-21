@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import MKSpinner
 
 class NewSocialViewController: UIViewController {
 
     var eventNameField: UITextField!
     var eventDescriptionView: UITextView!
     var datePicker: UIDatePicker!
-    var selectImageButton: UIButton!
+    var selectLibraryImageButton: UIButton!
+    var selectCameraImageButton: UIButton!
     var selectedImageView: UIImageView!
     var submitButton: UIButton!
     
@@ -25,7 +27,7 @@ class NewSocialViewController: UIViewController {
         self.navigationItem.title = "New Post"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNewPost))
         
-        eventNameField = UITextField(frame: CGRect(x: 30, y: 100, width: view.frame.width - 60, height: 40))
+        eventNameField = UITextField(frame: CGRect(x: 30, y: 85, width: view.frame.width - 60, height: 40))
         eventNameField.placeholder = "Event Name"
         view.addSubview(eventNameField)
         
@@ -33,20 +35,26 @@ class NewSocialViewController: UIViewController {
         eventDescriptionView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         view.addSubview(eventDescriptionView)
         
-        selectImageButton = UIButton(frame: CGRect(x: 30, y: 270, width: 100, height: 50))
-        selectImageButton.setTitle("Select Picture", for: .normal)
-        selectImageButton.setTitleColor(.blue, for: .normal)
-        selectImageButton.addTarget(self, action: #selector(selectPicture), for: .touchUpInside)
-        view.addSubview(selectImageButton)
+        selectCameraImageButton = UIButton(frame: CGRect(x: 30, y: 270, width: 150, height: 50))
+        selectCameraImageButton.setTitle("Take Picture", for: .normal)
+        selectCameraImageButton.setTitleColor(.blue, for: .normal)
+        selectCameraImageButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
+        view.addSubview(selectCameraImageButton)
         
-        selectedImageView = UIImageView(frame: CGRect(x: view.frame.width/2, y: 270, width: view.frame.width - 25, height: 150))
+        selectLibraryImageButton = UIButton(frame: CGRect(x: 30, y: 330, width: 150, height: 50))
+        selectLibraryImageButton.setTitle("Select Picture", for: .normal)
+        selectLibraryImageButton.setTitleColor(.blue, for: .normal)
+        selectLibraryImageButton.addTarget(self, action: #selector(selectPictureFromLibrary), for: .touchUpInside)
+        view.addSubview(selectLibraryImageButton)
+        
+        selectedImageView = UIImageView(frame: CGRect(x: view.frame.width/2, y: 250, width: view.frame.width/2 - 25, height: 150))
         selectedImageView.contentMode = .scaleAspectFit
         view.addSubview(selectedImageView)
         
-        datePicker = UIDatePicker(frame: CGRect(x: 30, y: view.frame.height * 0.65, width: view.frame.width - 60, height: 200))
+        datePicker = UIDatePicker(frame: CGRect(x: 30, y: view.frame.height * 0.6, width: view.frame.width - 60, height: 200))
         view.addSubview(datePicker)
         
-        submitButton = UIButton(frame: CGRect(x: 30, y: view.frame.height * 0.8, width: view.frame.width - 60, height: 50))
+        submitButton = UIButton(frame: CGRect(x: 30, y: view.frame.height * 0.6 + 210, width: view.frame.width - 60, height: 50))
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(.blue, for: .normal)
         submitButton.addTarget(self, action: #selector(newPost), for: .touchUpInside)
@@ -59,7 +67,7 @@ class NewSocialViewController: UIViewController {
         }
     }
     
-    @objc func selectPicture() {
+    @objc func selectPictureFromLibrary() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
@@ -67,12 +75,29 @@ class NewSocialViewController: UIViewController {
         self.present(imagePicker, animated: true, completion: nil)
     }
     
+    @objc func selectPictureFromCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .camera
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
     @objc func newPost() {
         if eventNameField.hasText && eventDescriptionView.hasText && selectedImage != nil {
-            FirebaseDatabaseHelper.newPostWithImage(selectedImage: selectedImage, name: eventNameField.text!, description: eventDescriptionView.text, date: datePicker.date)
+            MKFullSpinner.show("Uploading Post", animated: true)
+            FirebaseDatabaseHelper.newPostWithImage(selectedImage: selectedImage, name: eventNameField.text!, description: eventDescriptionView.text, date: datePicker.date) {
+                MKFullSpinner.hide()
+                self.dismiss(animated: true, completion: {
+                    print("Post Complete")
+                })
+            }
         }
         else{
-            print("Need to fill all fields")
+            let alertController = UIAlertController(title: "Fields Blank", message:
+                "Make sure you enter all required information.", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 }

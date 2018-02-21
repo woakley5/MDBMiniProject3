@@ -12,6 +12,7 @@ class FeedViewController: UIViewController {
 
     var logoutButton: UIButton!
     var feedTableView: UITableView!
+    var posts: [Post] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +29,25 @@ class FeedViewController: UIViewController {
         feedTableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         feedTableView.delegate = self
         feedTableView.dataSource = self
+        view.addSubview(feedTableView)
+        feedTableView.register(FeedTableViewCell.self, forCellReuseIdentifier: "post")
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !FirebaseAuthHelper.isLoggedIn() {
             self.performSegue(withIdentifier: "showLogin", sender: self)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        FirebaseDatabaseHelper.listenForPosts(tableView: feedTableView, newPostBlock: { post in
+            print("New Post Loaded!")
+            print(post.eventName)
+            self.posts.append(post)
+            self.posts.reverse()
+            self.feedTableView.reloadData()
+        })
     }
     
     @objc func logOut(){
@@ -55,12 +69,19 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = FeedTableViewCell()
+        let cell = feedTableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! FeedTableViewCell
+        cell.awakeFromNib()
+        let post = posts[indexPath.row]
+        cell.mainImageView.image = post.image
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
