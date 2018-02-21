@@ -14,6 +14,7 @@ class FeedTableViewCell: UITableViewCell {
     var eventNameLabel: UILabel!
     var eventDateLabel: UILabel!
     var eventDesctiptionLabel: UILabel!
+    var activityIndicator: UIActivityIndicatorView!
         
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +22,12 @@ class FeedTableViewCell: UITableViewCell {
         for subview in self.subviews {
             subview.removeFromSuperview()
         }
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 40, y: contentView.frame.height/2 - 20, width: 40, height: 40))
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.backgroundColor = (UIColor (white: 0.3, alpha: 0.8))
+        activityIndicator.layer.cornerRadius = 5
+        addSubview(activityIndicator)
         
         mainImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 120, height: contentView.frame.height - 20))
         mainImageView.clipsToBounds = true
@@ -42,10 +49,12 @@ class FeedTableViewCell: UITableViewCell {
     
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func startLoadingView() {
+        activityIndicator.startAnimating()
+    }
+    
+    func stopLoadingView() {
+        activityIndicator.stopAnimating()
     }
 
 }

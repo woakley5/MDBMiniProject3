@@ -33,7 +33,9 @@ class FeedViewController: UIViewController {
         feedTableView.register(FeedTableViewCell.self, forCellReuseIdentifier: "post")
         
         FirebaseDatabaseHelper.fetchPosts(withBlock: { posts in
-            self.posts.append(contentsOf: posts)
+            for p in posts.reversed(){
+                self.posts.insert(p, at: 0)
+            }
             self.feedTableView.reloadData()
         })
     }
@@ -69,7 +71,14 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! FeedTableViewCell
         let post = posts[indexPath.row]
         cell.awakeFromNib()
-        post.getPicture {
+        cell.startLoadingView()
+        if post.image == nil {
+            post.getPicture {
+                cell.mainImageView.image = post.image
+                cell.stopLoadingView()
+            }
+        }
+        else{
             cell.mainImageView.image = post.image
         }
         cell.eventNameLabel.text = post.eventName
