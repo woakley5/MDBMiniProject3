@@ -47,6 +47,10 @@ class FeedViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.feedTableView.reloadData()
+    }
+    
     @objc func logOut(){
         FirebaseAuthHelper.logOut(view: self) {
             print("Logged out!")

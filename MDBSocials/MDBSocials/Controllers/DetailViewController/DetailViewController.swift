@@ -21,8 +21,7 @@ class DetailViewController: UIViewController {
         view.addSubview(mainImageView)
         
         interestedButton = UIButton(frame: CGRect(x: 50, y: 300, width: view.frame.width - 100, height: 50))
-        interestedButton.setTitle("Im Interested!", for: .normal)
-        interestedButton.setTitleColor(.blue, for: .normal)
+        
         interestedButton.addTarget(self, action: #selector(tappedInterested), for: .touchUpInside)
         view.addSubview(interestedButton)
 
@@ -30,7 +29,27 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = post.eventName!
-        mainImageView.image = post.image!
+        mainImageView.image = post.image ?? UIImage(named: "defaultImage")
+        
+        var userHasSaidInterested = false
+        for id in post.interestedIds {
+            if id == FirebaseAuthHelper.getCurrentUser()?.uid {
+                userHasSaidInterested = true
+                break
+            }
+        }
+        
+        if userHasSaidInterested {
+            interestedButton.setTitle("Already Interested", for: .normal)
+            interestedButton.setTitleColor(.darkGray, for: .normal)
+            interestedButton.isUserInteractionEnabled = false
+        }
+        else{
+            interestedButton.setTitle("Im Interested!", for: .normal)
+            interestedButton.setTitleColor(.blue, for: .normal)
+            interestedButton.isUserInteractionEnabled = true
+        }
+        
         
     }
     
@@ -40,7 +59,9 @@ class DetailViewController: UIViewController {
     @objc func tappedInterested(){
         FirebaseDatabaseHelper.updateInterested(postId: post.id!, userId: (FirebaseAuthHelper.getCurrentUser()?.uid)!) {
             print("Updated interested")
-            //post.interested?.append()
+            interestedButton.setTitle("Already Interested", for: .normal)
+            interestedButton.setTitleColor(.darkGray, for: .normal)
+            interestedButton.isUserInteractionEnabled = false
         }
     }
 }

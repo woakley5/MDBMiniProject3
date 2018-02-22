@@ -20,7 +20,7 @@ class Post {
     var posterName: String?
     var id: String?
     var image: UIImage?
-    var interested: [UserModel]?
+    var interestedIds: [String] = []
     
     init(id: String, postDict: [String:Any]?) {
         self.id = id
@@ -40,18 +40,13 @@ class Post {
             if let posterId = postDict!["posterId"] as? String {
                 self.posterId = posterId
             }
-            if let interestedIDs = postDict!["interested"] as? [String] {
-                for x in interestedIDs {
-                    FirebaseDatabaseHelper.getUserWithId(id: x, withBlock: { user in
-                        self.interested?.append(user)
-                    })
+            if let interestedIDs = postDict!["Interested"] {
+                for (_, val) in interestedIDs as! Dictionary<String, Any>{
+                    //print(String(describing: val))
+                    self.interestedIds.append(String(describing: val))
                 }
             }
         }
-    }
-    
-    func getInterestedArray() -> [UserModel]? {
-        return interested
     }
     
     func getPicture(withBlock: @escaping () -> ()) {

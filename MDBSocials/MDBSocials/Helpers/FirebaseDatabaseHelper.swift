@@ -71,10 +71,9 @@ class FirebaseDatabaseHelper {
     }
     
     static func updateInterested(postId: String, userId: String, withBlock: () -> ()){
-        let postRef = Database.database().reference().child("Posts").child(postId)
-        let newInterestedUser = ["userId": userId] as [String : Any]
-        let childUpdates = ["/\("Interested")/": newInterestedUser]
-        postRef.updateChildValues(childUpdates)
+        let postRef = Database.database().reference().child("Posts").child(postId).child("Interested")
+        let newInterestedUser = [postRef.childByAutoId().key: userId] as [String : Any]
+        postRef.updateChildValues(newInterestedUser)
         withBlock()
     }
     
