@@ -26,15 +26,24 @@ class NewSocialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupNavigationBar()
+        setupBackground()
+        setupTextFields()
+        setupPictureSelection()
+        setupDatePicker()
+        setupSubmitButton()
+    }
+    
+    func setupNavigationBar(){
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-        
         self.navigationItem.title = "New Post"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNewPost))
-        
+    }
+    
+    func setupBackground(){
         backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         backgroundImage.image = #imageLiteral(resourceName: "gradientLogo")
         backgroundImage.contentMode = .scaleAspectFit
@@ -43,7 +52,9 @@ class NewSocialViewController: UIViewController {
         backgroundBlur = UIVisualEffectView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         backgroundBlur.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
         view.addSubview(backgroundBlur)
-        
+    }
+    
+    func setupTextFields(){
         eventNameField = UITextField(frame: CGRect(x: 30, y: 85, width: view.frame.width - 60, height: 40))
         eventNameField.placeholder = "Event Name"
         view.addSubview(eventNameField)
@@ -51,7 +62,9 @@ class NewSocialViewController: UIViewController {
         eventDescriptionView = UITextView(frame: CGRect(x: 30, y: 150, width: view.frame.width - 60, height: 100))
         eventDescriptionView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         view.addSubview(eventDescriptionView)
-        
+    }
+    
+    func setupPictureSelection(){
         selectCameraImageButton = UIButton(frame: CGRect(x: 30, y: 270, width: 150, height: 50))
         selectCameraImageButton.setTitle("Take Picture", for: .normal)
         selectCameraImageButton.setTitleColor(.blue, for: .normal)
@@ -67,10 +80,14 @@ class NewSocialViewController: UIViewController {
         selectedImageView = UIImageView(frame: CGRect(x: view.frame.width/2, y: 250, width: view.frame.width/2 - 25, height: 150))
         selectedImageView.contentMode = .scaleAspectFit
         view.addSubview(selectedImageView)
-        
+    }
+    
+    func setupDatePicker(){
         datePicker = UIDatePicker(frame: CGRect(x: 30, y: view.frame.height * 0.6, width: view.frame.width - 60, height: 200))
         view.addSubview(datePicker)
-        
+    }
+    
+    func setupSubmitButton(){
         submitButton = UIButton(frame: CGRect(x: 30, y: view.frame.height * 0.6 + 210, width: view.frame.width - 60, height: 50))
         submitButton.setTitle("Submit", for: .normal)
         submitButton.setTitleColor(.blue, for: .normal)

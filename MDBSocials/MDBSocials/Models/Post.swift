@@ -50,14 +50,16 @@ class Post {
     }
     
     func getPicture(withBlock: @escaping () -> ()) {
-        let urlReference = Storage.storage().reference(forURL: imageUrl!)
-        urlReference.getData(maxSize: 30 * 1024 * 1024) { data, error in
-            if let error = error {
-                print("Error getting image")
-                print(error.localizedDescription)
-            } else {
-                self.image = UIImage(data: data!)
-                withBlock()
+        if self.image == nil {
+            let urlReference = Storage.storage().reference(forURL: imageUrl!)
+            urlReference.getData(maxSize: 30 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print("Error getting image")
+                    print(error.localizedDescription)
+                } else {
+                    self.image = UIImage(data: data!)
+                    withBlock()
+                }
             }
         }
     }

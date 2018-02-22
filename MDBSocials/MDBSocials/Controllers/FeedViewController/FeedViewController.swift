@@ -43,6 +43,7 @@ class FeedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if !FirebaseAuthHelper.isLoggedIn() {
+            postsLoaded = false
             self.performSegue(withIdentifier: "showLogin", sender: self)
         }
         else if !postsLoaded{
@@ -56,10 +57,9 @@ class FeedViewController: UIViewController {
             })
             postsLoaded = true
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.feedTableView.reloadData()
+        else{
+            self.feedTableView.reloadData()
+        }
     }
     
     @objc func logOut(){
@@ -106,10 +106,16 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
             cell.mainImageView.image = post.image
         }
         cell.eventNameLabel.text = post.eventName
-        FirebaseDatabaseHelper.getUserWithId(id: post.posterId!, withBlock: { user in
-            cell.posterNameLabel.text = "Created by: " + user.username!
-            post.posterName = user.username
-        })
+        if post.posterName == nil {
+            FirebaseDatabaseHelper.getUserWithId(id: post.posterId!, withBlock: { user in
+                cell.posterNameLabel.text = "Created by: " + user.username!
+                post.posterName = user.username
+            })
+        }
+        else{
+            cell.posterNameLabel.text = "Created by: " + post.posterName!
+        }
+        
         FirebaseDatabaseHelper.getInterestedUsers(postId: post.id!) { (users) in
             let count = users.count
             if count == 1{

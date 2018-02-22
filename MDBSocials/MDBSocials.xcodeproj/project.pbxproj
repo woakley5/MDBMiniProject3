@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		68EDE3B95511B67553ECB9E4 /* Pods_MDBSocialsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 082485A8970F848EB6160699 /* Pods_MDBSocialsUITests.framework */; };
+		6CDA5F77203F80B400932490 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6CDA5F76203F80B400932490 /* GoogleService-Info.plist */; };
 		6CDEA378203BF48F002BA2DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA377203BF48F002BA2DC /* AppDelegate.swift */; };
 		6CDEA37A203BF48F002BA2DC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA379203BF48F002BA2DC /* LoginViewController.swift */; };
 		6CDEA37D203BF48F002BA2DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CDEA37B203BF48F002BA2DC /* Main.storyboard */; };
@@ -15,7 +16,6 @@
 		6CDEA382203BF48F002BA2DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CDEA380203BF48F002BA2DC /* LaunchScreen.storyboard */; };
 		6CDEA38D203BF48F002BA2DC /* MDBSocialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA38C203BF48F002BA2DC /* MDBSocialsTests.swift */; };
 		6CDEA398203BF48F002BA2DC /* MDBSocialsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA397203BF48F002BA2DC /* MDBSocialsUITests.swift */; };
-		6CDEA3AE203BF6A7002BA2DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6CDEA3AD203BF6A7002BA2DC /* GoogleService-Info.plist */; };
 		6CDEA3B0203BF6E5002BA2DC /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA3AF203BF6E5002BA2DC /* SignupViewController.swift */; };
 		6CDEA3B2203BF6EE002BA2DC /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA3B1203BF6EE002BA2DC /* FeedViewController.swift */; };
 		6CDEA3B4203BF6F4002BA2DC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEA3B3203BF6F4002BA2DC /* DetailViewController.swift */; };
@@ -51,6 +51,7 @@
 		153B2F77E7E1AB79A0DF00C1 /* Pods-MDBSocialsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDBSocialsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDBSocialsUITests/Pods-MDBSocialsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		296F0B948C7E09A3B17A364B /* Pods_MDBSocials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDBSocials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C13E0E133DDDF7B4AC9A365 /* Pods-MDBSocials.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDBSocials.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDBSocials/Pods-MDBSocials.release.xcconfig"; sourceTree = "<group>"; };
+		6CDA5F76203F80B400932490 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6CDEA374203BF48F002BA2DC /* MDBSocials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDBSocials.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CDEA377203BF48F002BA2DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CDEA379203BF48F002BA2DC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		6CDEA393203BF48F002BA2DC /* MDBSocialsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDBSocialsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CDEA397203BF48F002BA2DC /* MDBSocialsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBSocialsUITests.swift; sourceTree = "<group>"; };
 		6CDEA399203BF48F002BA2DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6CDEA3AD203BF6A7002BA2DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6CDEA3AF203BF6E5002BA2DC /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		6CDEA3B1203BF6EE002BA2DC /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		6CDEA3B3203BF6F4002BA2DC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 				6CDEA37E203BF48F002BA2DC /* Assets.xcassets */,
 				6CDEA380203BF48F002BA2DC /* LaunchScreen.storyboard */,
 				6CDEA383203BF48F002BA2DC /* Info.plist */,
-				6CDEA3AD203BF6A7002BA2DC /* GoogleService-Info.plist */,
+				6CDA5F76203F80B400932490 /* GoogleService-Info.plist */,
 			);
 			path = MDBSocials;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CDEA382203BF48F002BA2DC /* LaunchScreen.storyboard in Resources */,
-				6CDEA3AE203BF6A7002BA2DC /* GoogleService-Info.plist in Resources */,
+				6CDA5F77203F80B400932490 /* GoogleService-Info.plist in Resources */,
 				6CDEA37F203BF48F002BA2DC /* Assets.xcassets in Resources */,
 				6CDEA37D203BF48F002BA2DC /* Main.storyboard in Resources */,
 			);

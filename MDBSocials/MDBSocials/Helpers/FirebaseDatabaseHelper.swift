@@ -10,6 +10,7 @@ import Foundation
 import FirebaseDatabase
 import FirebaseStorage
 import UIKit
+import MKSpinner
 
 class FirebaseDatabaseHelper {
     
@@ -22,6 +23,7 @@ class FirebaseDatabaseHelper {
         imageRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 print("Error uploading")
+                MKFullSpinner.hide()
                 return
             }
             let downloadURL = String(describing: metadata.downloadURL()!)

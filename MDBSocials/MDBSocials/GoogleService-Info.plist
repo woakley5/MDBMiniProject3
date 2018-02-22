@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>546826664083-6f1uvo1vd8qotc58plk2f9p9d4rie5tv.apps.googleusercontent.com</string>
+	<string>679527840454-ttkl58vfu51rh61s2ri15entkhvge430.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.546826664083-6f1uvo1vd8qotc58plk2f9p9d4rie5tv</string>
+	<string>com.googleusercontent.apps.679527840454-ttkl58vfu51rh61s2ri15entkhvge430</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCACfAuhrdfXOma__Dem1aNQ5TrxZ97xD0</string>
+	<string>AIzaSyDYrcuc9ifVC-jbI7q0PkfWkM6z-6hZvNQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>546826664083</string>
+	<string>679527840454</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.woakley.MDBSocials</string>
 	<key>PROJECT_ID</key>
-	<string>mdbsocials-8e0de</string>
+	<string>mdbsocials2-5cd13</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mdbsocials-8e0de.appspot.com</string>
+	<string>mdbsocials2-5cd13.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:546826664083:ios:cecc46324c64c48d</string>
+	<string>1:679527840454:ios:cecc46324c64c48d</string>
 	<key>DATABASE_URL</key>
-	<string>https://mdbsocials-8e0de.firebaseio.com</string>
+	<string>https://mdbsocials2-5cd13.firebaseio.com</string>
 </dict>
 </plist>
