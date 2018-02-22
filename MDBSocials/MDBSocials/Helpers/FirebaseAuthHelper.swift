@@ -27,7 +27,10 @@ class FirebaseAuthHelper {
     static func signUp(name: String, username: String, email: String, password: String, view: UIViewController, withBlock: @escaping (User?) -> ()) {
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user: User?, error) in
             if error == nil {
-                withBlock(user)
+                FirebaseDatabaseHelper.createNewUser(name: name, username: username, email: email, completionBlock: {
+                    print("User created!")
+                    withBlock(user)
+                })
             }
             else {
                 print(error.debugDescription)

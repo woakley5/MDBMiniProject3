@@ -17,9 +17,10 @@ class Post {
     var eventName: String?
     var imageUrl: String?
     var posterId: String?
+    var posterName: String?
     var id: String?
     var image: UIImage?
-    var interested: [String]?
+    var interested: [UserModel]?
     
     init(id: String, postDict: [String:Any]?) {
         self.id = id
@@ -39,7 +40,18 @@ class Post {
             if let posterId = postDict!["posterId"] as? String {
                 self.posterId = posterId
             }
+            if let interestedIDs = postDict!["interested"] as? [String] {
+                for x in interestedIDs {
+                    FirebaseDatabaseHelper.getUserWithId(id: x, withBlock: { user in
+                        self.interested?.append(user)
+                    })
+                }
+            }
         }
+    }
+    
+    func getInterestedArray() -> [UserModel]? {
+        return interested
     }
     
     func getPicture(withBlock: @escaping () -> ()) {

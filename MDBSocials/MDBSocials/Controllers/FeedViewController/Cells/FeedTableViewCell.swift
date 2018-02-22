@@ -12,8 +12,8 @@ class FeedTableViewCell: UITableViewCell {
 
     var mainImageView: UIImageView!
     var eventNameLabel: UILabel!
-    var eventDateLabel: UILabel!
-    var eventDesctiptionLabel: UILabel!
+    var posterNameLabel: UILabel!
+    var interestedLabel: UILabel!
     var activityIndicator: UIActivityIndicatorView!
         
     override func awakeFromNib() {
@@ -38,15 +38,12 @@ class FeedTableViewCell: UITableViewCell {
         eventNameLabel.font = UIFont(name: "Helvetica Bold", size: 20)
         addSubview(eventNameLabel)
         
-        eventDateLabel = UILabel(frame: CGRect(x: 140, y: 40, width: contentView.frame.width - 140, height: 20))
-        eventDateLabel.font = UIFont(name: "Helvetica", size: 12)
-        addSubview(eventDateLabel)
+        posterNameLabel = UILabel(frame: CGRect(x: 140, y: 40, width: contentView.frame.width - 140, height: 20))
+        posterNameLabel.font = UIFont(name: "Helvetica", size: 12)
+        addSubview(posterNameLabel)
         
-        eventDesctiptionLabel = UILabel(frame: CGRect(x: 140, y: 60, width: contentView.frame.width - 140, height: contentView.frame.height - 60))
-        eventDesctiptionLabel.numberOfLines = 2
-        addSubview(eventDesctiptionLabel)
-        
-    
+        interestedLabel = UILabel(frame: CGRect(x: 140, y: 60, width: contentView.frame.width - 140, height: contentView.frame.height - 60))
+        addSubview(interestedLabel)
     }
 
     func startLoadingView() {

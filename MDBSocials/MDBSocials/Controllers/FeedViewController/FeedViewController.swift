@@ -13,6 +13,7 @@ class FeedViewController: UIViewController {
     var logoutButton: UIButton!
     var feedTableView: UITableView!
     var posts: [Post] = []
+    var selectedPost: Post!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,13 @@ class FeedViewController: UIViewController {
     @objc func newPost(){
         self.performSegue(withIdentifier: "showNewSocial", sender: self)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is DetailViewController {
+            let dest = segue.destination as! DetailViewController
+            dest.post = selectedPost
+        }
+    }
 }
 
 extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
@@ -70,6 +78,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! FeedTableViewCell
         let post = posts[indexPath.row]
+        cell.accessoryType = .disclosureIndicator
         cell.awakeFromNib()
         cell.startLoadingView()
         if post.image == nil {
@@ -82,8 +91,12 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
             cell.mainImageView.image = post.image
         }
         cell.eventNameLabel.text = post.eventName
-        cell.eventDateLabel.text = post.date
-        cell.eventDesctiptionLabel.text = post.description
+        FirebaseDatabaseHelper.getUserWithId(id: post.posterId!, withBlock: { user in
+            cell.posterNameLabel.text = user.username
+        })
+        FirebaseDatabaseHelper.getInterestedUsers(postId: post.id!) { (users) in
+            cell.interestedLabel.text = "Interested: " + String(describing: users.count)
+        }
         return cell
     }
     
@@ -93,6 +106,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Tapped row")
+        selectedPost = posts[indexPath.row]
+        self.performSegue(withIdentifier: "showSocialDetail", sender: self)
     }
 }

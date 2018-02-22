@@ -31,10 +31,10 @@ class FirebaseDatabaseHelper {
     static private func newPost(name: String, description: String, pictureURL: String, date: Date, completion: @escaping ()->()) {
         let posterId = FirebaseAuthHelper.getCurrentUser()?.uid
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd,yyyy at h:mm a"
+        dateFormatter.dateFormat = "MMM d, h:mm a"
         let dateString = dateFormatter.string(from: date)
         let postsRef = Database.database().reference().child("Posts")
-        let newPost = ["name": name, "pictureURL": pictureURL, "posterId": posterId!, "description": description, "date": dateString] as [String : Any]
+        let newPost = ["name": name, "pictureURL": pictureURL, "posterId": posterId!/*, "posterName": posterName!*/, "description": description, "date": dateString] as [String : Any]
         let key = postsRef.childByAutoId().key
         let childUpdates = ["/\(key)/": newPost]
         postsRef.updateChildValues(childUpdates)
@@ -50,5 +50,46 @@ class FirebaseDatabaseHelper {
             
         })
     }
+    
+    static func createNewUser(name: String, username: String, email: String, completionBlock: @escaping () -> ()) {
+        let usersRef = Database.database().reference().child("User")
+        let newUser = ["name": name, "username": username, "email": email] as [String : Any]
+        let childUpdates = ["/\(String(describing: FirebaseAuthHelper.getCurrentUser()!.uid))/": newUser]
+        usersRef.updateChildValues(childUpdates)
+        completionBlock()
+    }
+    
+    static func getUserWithId(id: String, withBlock: @escaping (UserModel) -> ()) {
+        let usersRef = Database.database().reference().child("User")
+        usersRef.child(id).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let user = UserModel(id: id, username: (value?["username"] as? String)!, name: (value?["name"] as? String)!, email: (value?["email"] as? String)!)
+            withBlock(user)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    static func updateInterested(postId: String, userId: String, withBlock: () -> ()){
+        let postRef = Database.database().reference().child("Posts").child(postId)
+        let newInterestedUser = ["userId": userId] as [String : Any]
+        let childUpdates = ["/\("Interested")/": newInterestedUser]
+        postRef.updateChildValues(childUpdates)
+        withBlock()
+    }
+    
+    static func getInterestedUsers(postId: String, withBlock: @escaping ([String]) -> ()){
+        let ref = Database.database().reference()
+        ref.child("Posts").child(postId).child("Interested").observeSingleEvent(of: .value, with: { (snapshot) in
+            var users: [String] = []
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                let value = snap.value as! String
+                users.append(value)
+            }
+            withBlock(users)
+        })
+    }
+    
     
 }
