@@ -7,39 +7,74 @@
 //
 
 import UIKit
+import SkyFloatingLabelTextField
 
 class LoginViewController: UIViewController {
 
-    var emailField: UITextField!
-    var passwordField: UITextField!
+    var emailField: SkyFloatingLabelTextField!
+    var passwordField: SkyFloatingLabelTextField!
     var logInButton: UIButton!
     var signUpButton: UIButton!
+    var logoImage: UIImageView!
+    var logoLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         
-        self.navigationItem.title = "Log In"
-        
-        emailField = UITextField(frame: CGRect(x: 30, y: 100, width: view.frame.width - 60, height: 40))
+        emailField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 320, width: view.frame.width - 60, height: 40))
         emailField.placeholder = "Email"
+        emailField.title = "Email"
+        emailField.textColor = .white
+        emailField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        emailField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.tintColor = .white
         view.addSubview(emailField)
         
-        passwordField = UITextField(frame: CGRect(x: 30, y: 150, width: view.frame.width - 60, height: 40))
+        passwordField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 390, width: view.frame.width - 60, height: 40))
         passwordField.placeholder = "Password"
+        passwordField.title = "Password"
+        passwordField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.textColor = .white
+        passwordField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        passwordField.tintColor = .white
         passwordField.isSecureTextEntry = true
         view.addSubview(passwordField)
         
-        logInButton = UIButton(frame: CGRect(x: 30, y: 200, width: view.frame.width - 60, height: 60))
+        logInButton = UIButton(frame: CGRect(x: 30, y: 500, width: view.frame.width/2 - 60, height: 60))
         logInButton.setTitle("Log In!", for: .normal)
+        logInButton.backgroundColor = .white
+        logInButton.layer.cornerRadius = 10
         logInButton.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
-        logInButton.setTitleColor(.blue, for: .normal)
+        logInButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(logInButton)
         
-        signUpButton = UIButton(frame: CGRect(x: 30, y: 250, width: view.frame.width - 60, height: 60))
+        signUpButton = UIButton(frame: CGRect(x: view.frame.width/2 + 30, y: 500, width: view.frame.width/2 - 60, height: 60))
         signUpButton.setTitle("Sign Up!", for: .normal)
+        signUpButton.backgroundColor = .white
+        signUpButton.layer.cornerRadius = 10
         signUpButton.addTarget(self, action: #selector(tappedSignUp), for: .touchUpInside)
-        signUpButton.setTitleColor(.blue, for: .normal)
+        signUpButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(signUpButton)
+        
+        view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        
+        logoImage = UIImageView(frame: CGRect(x: 20, y: 20, width: view.frame.width - 40, height: 300))
+        logoImage.contentMode = .scaleAspectFit
+        logoImage.image = #imageLiteral(resourceName: "whiteLogoOutline")
+        view.addSubview(logoImage)
+        
+        logoLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 40, y: 180, width: 220, height: 140))
+        logoLabel.text = "SOCIALS"
+        logoLabel.textColor = .white
+        logoLabel.font = UIFont(name: "ArialRoundedMTBold", size: 45)
+        view.addSubview(logoLabel)
     }
     
     @objc func tappedLogin(){

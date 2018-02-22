@@ -13,6 +13,7 @@ target 'MDBSocials' do
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
   pod 'MKSpinner'
+  pod 'SkyFloatingLabelTextField', '~> 3.0'
   
   target 'MDBSocialsTests' do
     inherit! :search_paths

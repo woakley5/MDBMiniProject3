@@ -7,43 +7,95 @@
 //
 
 import UIKit
+import SkyFloatingLabelTextField
 
 class SignupViewController: UIViewController {
     
-    var fullNameField: UITextField!
-    var usernameField: UITextField!
-    var emailField: UITextField!
-    var passwordField: UITextField!
+    var fullNameField: SkyFloatingLabelTextField!
+    var usernameField: SkyFloatingLabelTextField!
+    var emailField: SkyFloatingLabelTextField!
+    var passwordField: SkyFloatingLabelTextField!
     var logInButton: UIButton!
     var signUpButton: UIButton!
+    var signupTitleLabel: UILabel!
+    var backButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Sign Up"
+        view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        
+        signupTitleLabel = UILabel(frame: CGRect(x: 30, y: 30, width: view.frame.width - 60, height: 80))
+        signupTitleLabel.font = UIFont(name: "ArialRoundedMTBold", size: 45)
+        signupTitleLabel.text = "Sign Up"
+        signupTitleLabel.textColor = .white
+        signupTitleLabel.textAlignment = .center
+        view.addSubview(signupTitleLabel)
 
-        fullNameField = UITextField(frame: CGRect(x: 30, y: 100, width: view.frame.width - 60, height: 40))
+        fullNameField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 125, width: view.frame.width - 60, height: 40))
         fullNameField.placeholder = "Full Name"
+        fullNameField.title = "Full Name"
+        fullNameField.textColor = .white
+        fullNameField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        fullNameField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        fullNameField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        fullNameField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        fullNameField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        fullNameField.tintColor = .white
         view.addSubview(fullNameField)
         
-        usernameField = UITextField(frame: CGRect(x: 30, y: 150, width: view.frame.width - 60, height: 40))
+        usernameField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 175, width: view.frame.width - 60, height: 40))
         usernameField.placeholder = "Username"
+        usernameField.title = "Username"
+        usernameField.textColor = .white
+        usernameField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        usernameField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        usernameField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        usernameField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        usernameField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        usernameField.tintColor = .white
         view.addSubview(usernameField)
         
-        emailField = UITextField(frame: CGRect(x: 30, y: 200, width: view.frame.width - 60, height: 40))
+        emailField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 225, width: view.frame.width - 60, height: 40))
         emailField.placeholder = "Email"
+        usernameField.title = "Email"
+        emailField.textColor = .white
+        emailField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        emailField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        emailField.tintColor = .white
         view.addSubview(emailField)
         
-        passwordField = UITextField(frame: CGRect(x: 30, y: 250, width: view.frame.width - 60, height: 40))
+        passwordField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 275, width: view.frame.width - 60, height: 40))
         passwordField.placeholder = "Password"
+        passwordField.title = "Password"
+        passwordField.textColor = .white
+        passwordField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        passwordField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        passwordField.tintColor = .white
         passwordField.isSecureTextEntry = true
         view.addSubview(passwordField)
         
-        signUpButton = UIButton(frame: CGRect(x: 30, y: 300, width: view.frame.width - 60, height: 60))
+        signUpButton = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: 375, width: 200, height: 60))
         signUpButton.setTitle("Create Account", for: .normal)
+        signUpButton.backgroundColor = .white
+        signUpButton.layer.cornerRadius = 10
         signUpButton.addTarget(self, action: #selector(tappedCreateAccount), for: .touchUpInside)
-        signUpButton.setTitleColor(.blue, for: .normal)
+        signUpButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(signUpButton)
+        
+        backButton = UIButton(frame: CGRect(x: view.frame.width/2 - 50, y: 450, width: 100, height: 60))
+        backButton.setTitle("Cancel", for: .normal)
+        backButton.backgroundColor = .white
+        backButton.layer.cornerRadius = 10
+        backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
+        backButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
+        view.addSubview(backButton)
     }
     
     @objc func tappedCreateAccount(){
@@ -62,6 +114,10 @@ class SignupViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    @objc func tappedBackButton(){
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
 }

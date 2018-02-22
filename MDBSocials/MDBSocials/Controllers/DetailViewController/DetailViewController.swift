@@ -13,24 +13,49 @@ class DetailViewController: UIViewController {
     var post: Post!
     var mainImageView: UIImageView!
     var interestedButton: UIButton!
+    var descriptionLabel: UILabel!
+    var posterNameLabel: UILabel!
+    var interestedLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         mainImageView = UIImageView(frame: CGRect(x: 20, y: 85, width: view.frame.width - 40, height: (view.frame.width - 40) * 9/16))
+        mainImageView.contentMode = .scaleAspectFit
         view.addSubview(mainImageView)
         
-        interestedButton = UIButton(frame: CGRect(x: 50, y: 300, width: view.frame.width - 100, height: 50))
-        
+        interestedButton = UIButton(frame: CGRect(x: view.frame.width/2 +  20, y: view.frame.height - 75, width: view.frame.width / 2 - 20, height: 50))
         interestedButton.addTarget(self, action: #selector(tappedInterested), for: .touchUpInside)
         view.addSubview(interestedButton)
-
+        
+        interestedLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height - 75, width: view.frame.width/2 - 40, height: 50))
+        view.addSubview(interestedLabel)
+        
+        descriptionLabel = UILabel(frame: CGRect(x: 20, y: 300, width: view.frame.width - 40, height: 300))
+        descriptionLabel.numberOfLines = 5
+        descriptionLabel.textAlignment = .center
+        view.addSubview(descriptionLabel)
+        
+        posterNameLabel = UILabel(frame: CGRect(x: 20, y: 290, width: view.frame.width - 40, height: 25))
+        posterNameLabel.textAlignment = .center
+        view.addSubview(posterNameLabel)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = post.eventName!
         mainImageView.image = post.image ?? UIImage(named: "defaultImage")
-        
+        setupInterestedButton()
+        populateInfo()
+    }
+    
+    func populateInfo(){
+        descriptionLabel.text = post.description
+        interestedLabel.text = "Members Interested: " + String(describing: post.interestedIds.count)
+        posterNameLabel.text = "Posted By: " + post.posterName!
+    }
+    
+    func setupInterestedButton(){
         var userHasSaidInterested = false
         for id in post.interestedIds {
             if id == FirebaseAuthHelper.getCurrentUser()?.uid {
@@ -45,15 +70,10 @@ class DetailViewController: UIViewController {
             interestedButton.isUserInteractionEnabled = false
         }
         else{
-            interestedButton.setTitle("Im Interested!", for: .normal)
+            interestedButton.setTitle("I'm Interested!", for: .normal)
             interestedButton.setTitleColor(.blue, for: .normal)
             interestedButton.isUserInteractionEnabled = true
         }
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
     }
     
     @objc func tappedInterested(){

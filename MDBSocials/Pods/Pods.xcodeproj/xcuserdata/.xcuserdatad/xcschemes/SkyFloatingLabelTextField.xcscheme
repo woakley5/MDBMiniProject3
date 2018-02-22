@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '5A9652F98CCEA310C9977FFE9423DFA5'
-               BlueprintName = 'Pods-MDBSocials'
+               BlueprintIdentifier = '4B518310A7DF0E3D6756D91396EAE844'
+               BlueprintName = 'SkyFloatingLabelTextField'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods-MDBSocials.framework'>
+               BuildableName = 'SkyFloatingLabelTextField.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -11,6 +11,9 @@ import MKSpinner
 
 class NewSocialViewController: UIViewController {
 
+    var backgroundImage: UIImageView!
+    var backgroundBlur: UIVisualEffectView!
+    
     var eventNameField: UITextField!
     var eventDescriptionView: UITextView!
     var datePicker: UIDatePicker!
@@ -24,8 +27,22 @@ class NewSocialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        
         self.navigationItem.title = "New Post"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNewPost))
+        
+        backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        backgroundImage.image = #imageLiteral(resourceName: "gradientLogo")
+        backgroundImage.contentMode = .scaleAspectFit
+        view.addSubview(backgroundImage)
+        
+        backgroundBlur = UIVisualEffectView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        backgroundBlur.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        view.addSubview(backgroundBlur)
         
         eventNameField = UITextField(frame: CGRect(x: 30, y: 85, width: view.frame.width - 60, height: 40))
         eventNameField.placeholder = "Event Name"

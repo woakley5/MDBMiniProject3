@@ -14,14 +14,19 @@ class FeedViewController: UIViewController {
     var feedTableView: UITableView!
     var posts: [Post] = []
     var selectedPost: Post!
+    var postsLoaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "My Feed"
-        
-        logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 30))
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+
+        logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 30))
         logoutButton.setTitle("Log Out", for: .normal)
-        logoutButton.setTitleColor(.blue, for: .normal)
+        logoutButton.setTitleColor(.white, for: .normal)
         logoutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
         
@@ -33,17 +38,22 @@ class FeedViewController: UIViewController {
         view.addSubview(feedTableView)
         feedTableView.register(FeedTableViewCell.self, forCellReuseIdentifier: "post")
         
-        FirebaseDatabaseHelper.fetchPosts(withBlock: { posts in
-            for p in posts.reversed(){
-                self.posts.insert(p, at: 0)
-            }
-            self.feedTableView.reloadData()
-        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !FirebaseAuthHelper.isLoggedIn() {
             self.performSegue(withIdentifier: "showLogin", sender: self)
+        }
+        else if !postsLoaded{
+            posts.removeAll()
+            FirebaseDatabaseHelper.removeObserversForPostRef()
+            FirebaseDatabaseHelper.fetchPosts(withBlock: { posts in
+                for p in posts.reversed(){
+                    self.posts.insert(p, at: 0)
+                }
+                self.feedTableView.reloadData()
+            })
+            postsLoaded = true
         }
     }
     
@@ -52,6 +62,7 @@ class FeedViewController: UIViewController {
     }
     
     @objc func logOut(){
+        postsLoaded = false
         FirebaseAuthHelper.logOut(view: self) {
             print("Logged out!")
             self.performSegue(withIdentifier: "showLogin", sender: self)
@@ -97,6 +108,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
         cell.eventNameLabel.text = post.eventName
         FirebaseDatabaseHelper.getUserWithId(id: post.posterId!, withBlock: { user in
             cell.posterNameLabel.text = user.username
+            post.posterName = user.username
         })
         FirebaseDatabaseHelper.getInterestedUsers(postId: post.id!) { (users) in
             cell.interestedLabel.text = "Interested: " + String(describing: users.count)

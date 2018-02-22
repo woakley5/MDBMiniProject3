@@ -13,6 +13,8 @@ import UIKit
 
 class FirebaseDatabaseHelper {
     
+    static var postsRef = Database.database().reference()
+    
     static func newPostWithImage(selectedImage: UIImage, name: String, description: String, date: Date, completion: @escaping ()->()){
         let data = UIImagePNGRepresentation(selectedImage)!
         let imageRef = Storage.storage().reference().child("postImages/" + name.trimmingCharacters(in: .whitespaces) + ".png")
@@ -43,12 +45,14 @@ class FirebaseDatabaseHelper {
     }
     
     static func fetchPosts(withBlock: @escaping ([Post]) -> ()){
-        let ref = Database.database().reference()
-        ref.child("Posts").observe(.childAdded, with: { (snapshot) in
+        postsRef.child("Posts").observe(.childAdded, with: { (snapshot) in
             let post = Post(id: snapshot.key, postDict: snapshot.value as! [String : Any]?)
             withBlock([post])
-            
         })
+    }
+    
+    static func removeObserversForPostRef(){
+        postsRef.removeAllObservers()
     }
     
     static func createNewUser(name: String, username: String, email: String, completionBlock: @escaping () -> ()) {

@@ -18,7 +18,7 @@ class FirebaseAuthHelper {
             }
             else{
                 print(error.debugDescription)
-                showAlert(title: "Log In Error", message: error.debugDescription, currentView: view)
+                showAlert(title: "Log In Error", message: "Looks like that user doesnt exist! Try creating an account.", currentView: view)
 
             }
         })
@@ -34,7 +34,7 @@ class FirebaseAuthHelper {
             }
             else {
                 print(error.debugDescription)
-                showAlert(title: "Sign Up Error", message: error.debugDescription, currentView: view)
+                showAlert(title: "Sign Up Error", message: "Sorry there was an error creating your account. Try again later.", currentView: view)
             }
         })
     }

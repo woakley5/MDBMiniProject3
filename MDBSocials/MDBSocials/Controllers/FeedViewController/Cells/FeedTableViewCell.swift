@@ -23,7 +23,7 @@ class FeedTableViewCell: UITableViewCell {
             subview.removeFromSuperview()
         }
         
-        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 40, y: contentView.frame.height/2 - 20, width: 40, height: 40))
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 50, y: contentView.frame.height/2 - 20, width: 40, height: 40))
         activityIndicator.hidesWhenStopped = true
         activityIndicator.backgroundColor = (UIColor (white: 0.3, alpha: 0.8))
         activityIndicator.layer.cornerRadius = 5
