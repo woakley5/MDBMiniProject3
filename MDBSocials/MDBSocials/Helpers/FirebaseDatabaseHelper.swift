@@ -19,7 +19,7 @@ class FirebaseDatabaseHelper {
         let data = UIImagePNGRepresentation(selectedImage)!
         let imageRef = Storage.storage().reference().child("postImages/" + name.trimmingCharacters(in: .whitespaces) + ".png")
         
-        let uploadTask = imageRef.putData(data, metadata: nil) { (metadata, error) in
+        imageRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 print("Error uploading")
                 return
@@ -36,7 +36,7 @@ class FirebaseDatabaseHelper {
         dateFormatter.dateFormat = "MMM d, h:mm a"
         let dateString = dateFormatter.string(from: date)
         let postsRef = Database.database().reference().child("Posts")
-        let newPost = ["name": name, "pictureURL": pictureURL, "posterId": posterId!/*, "posterName": posterName!*/, "description": description, "date": dateString] as [String : Any]
+        let newPost = ["name": name, "pictureURL": pictureURL, "posterId": posterId!, "description": description, "date": dateString] as [String : Any]
         let key = postsRef.childByAutoId().key
         let childUpdates = ["/\(key)/": newPost]
         postsRef.updateChildValues(childUpdates)
@@ -93,6 +93,4 @@ class FirebaseDatabaseHelper {
             withBlock(users)
         })
     }
-    
-    
 }

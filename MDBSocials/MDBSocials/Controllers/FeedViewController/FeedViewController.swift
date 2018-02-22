@@ -35,6 +35,7 @@ class FeedViewController: UIViewController {
         feedTableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         feedTableView.delegate = self
         feedTableView.dataSource = self
+        feedTableView.separatorColor = .clear
         view.addSubview(feedTableView)
         feedTableView.register(FeedTableViewCell.self, forCellReuseIdentifier: "post")
         
@@ -93,7 +94,6 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = feedTableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! FeedTableViewCell
         let post = posts[indexPath.row]
-        cell.accessoryType = .disclosureIndicator
         cell.awakeFromNib()
         cell.startLoadingView()
         if post.image == nil {
@@ -107,18 +107,24 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.eventNameLabel.text = post.eventName
         FirebaseDatabaseHelper.getUserWithId(id: post.posterId!, withBlock: { user in
-            cell.posterNameLabel.text = user.username
+            cell.posterNameLabel.text = "Created by: " + user.username!
             post.posterName = user.username
         })
         FirebaseDatabaseHelper.getInterestedUsers(postId: post.id!) { (users) in
-            cell.interestedLabel.text = "Interested: " + String(describing: users.count)
+            let count = users.count
+            if count == 1{
+                cell.interestedLabel.text = String(describing: count) + " person interested"
+            }
+            else{
+                cell.interestedLabel.text = String(describing: count) + " people interested"
+            }
         }
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        return 120.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -10,6 +10,7 @@ import UIKit
 
 class FeedTableViewCell: UITableViewCell {
 
+    var background: UIView!
     var mainImageView: UIImageView!
     var eventNameLabel: UILabel!
     var posterNameLabel: UILabel!
@@ -23,27 +24,33 @@ class FeedTableViewCell: UITableViewCell {
             subview.removeFromSuperview()
         }
         
-        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 50, y: contentView.frame.height/2 - 20, width: 40, height: 40))
+        background = UIView(frame: CGRect(x: 10, y: 10, width: contentView.frame.width - 20, height: contentView.frame.height - 20))
+        background.backgroundColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        background.layer.cornerRadius = 10
+        addSubview(background)
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 50, y: background.frame.height/2 - 20, width: 40, height: 40))
         activityIndicator.hidesWhenStopped = true
         activityIndicator.backgroundColor = (UIColor (white: 0.3, alpha: 0.8))
         activityIndicator.layer.cornerRadius = 5
-        addSubview(activityIndicator)
+        background.addSubview(activityIndicator)
         
-        mainImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 120, height: contentView.frame.height - 20))
+        mainImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: background.frame.height))
         mainImageView.clipsToBounds = true
-        mainImageView.contentMode = .scaleAspectFit
-        addSubview(mainImageView)
+        mainImageView.layer.cornerRadius = 10
+        mainImageView.contentMode = .scaleAspectFill
+        background.addSubview(mainImageView)
         
-        eventNameLabel = UILabel(frame: CGRect(x: 140, y: 10, width: contentView.frame.width - 140, height: 30))
+        eventNameLabel = UILabel(frame: CGRect(x: 160, y: 0, width: background.frame.width - 140, height: 30))
         eventNameLabel.font = UIFont(name: "Helvetica Bold", size: 20)
-        addSubview(eventNameLabel)
+        background.addSubview(eventNameLabel)
         
-        posterNameLabel = UILabel(frame: CGRect(x: 140, y: 40, width: contentView.frame.width - 140, height: 20))
+        posterNameLabel = UILabel(frame: CGRect(x: 160, y: 30, width: background.frame.width - 140, height: 20))
         posterNameLabel.font = UIFont(name: "Helvetica", size: 12)
-        addSubview(posterNameLabel)
+        background.addSubview(posterNameLabel)
         
-        interestedLabel = UILabel(frame: CGRect(x: 140, y: 60, width: contentView.frame.width - 140, height: contentView.frame.height - 60))
-        addSubview(interestedLabel)
+        interestedLabel = UILabel(frame: CGRect(x: 160, y: background.frame.height - 60, width: background.frame.width - 140, height: 60))
+        background.addSubview(interestedLabel)
     }
 
     func startLoadingView() {
