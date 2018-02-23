@@ -56,19 +56,19 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     func setupEventNameLabel(){
-        eventNameLabel = UILabel(frame: CGRect(x: 160, y: 0, width: background.frame.width - 140, height: 30))
+        eventNameLabel = UILabel(frame: CGRect(x: 160, y: 10, width: background.frame.width - 140, height: 30))
         eventNameLabel.font = UIFont(name: "Helvetica Bold", size: 20)
         background.addSubview(eventNameLabel)
     }
     
     func setupPosterNameLabel(){
-        posterNameLabel = UILabel(frame: CGRect(x: 160, y: 30, width: background.frame.width - 140, height: 20))
+        posterNameLabel = UILabel(frame: CGRect(x: 160, y: 40, width: background.frame.width - 140, height: 20))
         posterNameLabel.font = UIFont(name: "Helvetica", size: 12)
         background.addSubview(posterNameLabel)
     }
     
     func setupInterestedLabal(){
-        interestedLabel = UILabel(frame: CGRect(x: 160, y: background.frame.height - 60, width: background.frame.width - 140, height: 60))
+        interestedLabel = UILabel(frame: CGRect(x: 160, y: background.frame.height - 50, width: background.frame.width - 140, height: 60))
         background.addSubview(interestedLabel)
     }
 

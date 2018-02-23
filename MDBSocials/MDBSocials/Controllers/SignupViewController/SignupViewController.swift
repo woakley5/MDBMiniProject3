@@ -77,7 +77,7 @@ class SignupViewController: UIViewController {
     func setupEmailField(){
         emailField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 225, width: view.frame.width - 60, height: 40))
         emailField.placeholder = "Email"
-        usernameField.title = "Email"
+        emailField.title = "Email"
         emailField.textColor = .white
         emailField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
         emailField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)

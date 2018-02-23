@@ -7,22 +7,28 @@
 //
 
 import UIKit
+import CoreGraphics
 
 class DetailViewController: UIViewController {
     
     var post: Post!
+    
+    var firstBlockView: UIView!
     var mainImageView: UIImageView!
-    var interestedButton: UIButton!
+    
+    var secondBlockView: UIView!
     var descriptionLabel: UILabel!
     var posterNameLabel: UILabel!
+
+    var thirdBlockView: UIView!
+    var interestedButton: UIButton!
     var interestedLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupImageView()
-        setupInterestedButton()
-        setupDesctiptionLabel()
-        setupPosterNameLabel()
+        setupFirstBlock()
+        setupSecondBlock()
+        setupThirdBlock()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,32 +38,58 @@ class DetailViewController: UIViewController {
         populateLabelInfo()
     }
     
-    func setupImageView(){
-        mainImageView = UIImageView(frame: CGRect(x: 20, y: 85, width: view.frame.width - 40, height: (view.frame.width - 40) * 9/16))
-        mainImageView.contentMode = .scaleAspectFit
-        view.addSubview(mainImageView)
-    }
-    
-    func setupInterestedButton(){
-        interestedButton = UIButton(frame: CGRect(x: view.frame.width/2 +  20, y: view.frame.height - 75, width: view.frame.width / 2 - 20, height: 50))
-        interestedButton.addTarget(self, action: #selector(tappedInterested), for: .touchUpInside)
-        view.addSubview(interestedButton)
+    func setupFirstBlock(){
+        firstBlockView = UIView(frame: CGRect(x: 15, y: 85, width: view.frame.width - 30, height: 200))
+        firstBlockView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        firstBlockView.layer.cornerRadius = 10
+        view.addSubview(firstBlockView)
         
-        interestedLabel = UILabel(frame: CGRect(x: 20, y: view.frame.height - 75, width: view.frame.width/2 - 40, height: 50))
-        view.addSubview(interestedLabel)
+        mainImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: firstBlockView.frame.width - 20, height: firstBlockView.frame.height - 20))
+        mainImageView.contentMode = .scaleAspectFit
+        firstBlockView.addSubview(mainImageView)
     }
     
-    func setupDesctiptionLabel(){
-        descriptionLabel = UILabel(frame: CGRect(x: 20, y: 300, width: view.frame.width - 40, height: 300))
-        descriptionLabel.numberOfLines = 5
+    func setupSecondBlock(){
+        secondBlockView = UIView(frame: CGRect(x: 15, y: 310, width: view.frame.width - 30, height: 150))
+        secondBlockView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        secondBlockView.layer.cornerRadius = 10
+        view.addSubview(secondBlockView)
+        
+        posterNameLabel = UILabel(frame: CGRect(x: 15, y: 5, width: view.frame.width - 30, height: 30))
+        posterNameLabel.textAlignment = .left
+        posterNameLabel.textColor = .white
+        secondBlockView.addSubview(posterNameLabel)
+        
+        let divider = UIView(frame: CGRect(x: 15, y: 40, width: secondBlockView.frame.width - 30, height: 3))
+        divider.backgroundColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        secondBlockView.addSubview(divider)
+        
+        descriptionLabel = UILabel(frame: CGRect(x: 15, y: 40, width: secondBlockView.frame.width - 30, height: secondBlockView.frame.height - 40))
+        descriptionLabel.numberOfLines = 2
+        descriptionLabel.textColor = .white
         descriptionLabel.textAlignment = .center
-        view.addSubview(descriptionLabel)
+        secondBlockView.addSubview(descriptionLabel)
     }
     
-    func setupPosterNameLabel(){
-        posterNameLabel = UILabel(frame: CGRect(x: 20, y: 290, width: view.frame.width - 40, height: 25))
-        posterNameLabel.textAlignment = .center
-        view.addSubview(posterNameLabel)
+    func setupThirdBlock(){
+        thirdBlockView = UIView(frame: CGRect(x: 15, y: 480, width: view.frame.width - 30, height: 125))
+        thirdBlockView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        thirdBlockView.layer.cornerRadius = 10
+        view.addSubview(thirdBlockView)
+        
+        interestedLabel = UILabel(frame: CGRect(x: 15, y: 5, width: thirdBlockView.frame.width - 30, height: 30))
+        interestedLabel.textColor = .white
+        thirdBlockView.addSubview(interestedLabel)
+        
+        let divider = UIView(frame: CGRect(x: 15, y: 40, width: thirdBlockView.frame.width - 30, height: 3))
+        divider.backgroundColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        thirdBlockView.addSubview(divider)
+
+        interestedButton = UIButton(frame: CGRect(x: thirdBlockView.frame.width/2 - 90, y: 60, width: 180, height: 50))
+        interestedButton.addTarget(self, action: #selector(tappedInterested), for: .touchUpInside)
+        interestedButton.layer.cornerRadius = 10
+        thirdBlockView.addSubview(interestedButton)
+        
     }
     
     func populateLabelInfo(){
@@ -76,13 +108,15 @@ class DetailViewController: UIViewController {
         }
         
         if userHasSaidInterested {
-            interestedButton.setTitle("Already Interested", for: .normal)
+            interestedButton.setTitle("Im Already Interested", for: .normal)
             interestedButton.setTitleColor(.darkGray, for: .normal)
+            interestedButton.backgroundColor = .clear
             interestedButton.isUserInteractionEnabled = false
         }
         else{
             interestedButton.setTitle("I'm Interested!", for: .normal)
-            interestedButton.setTitleColor(.blue, for: .normal)
+            interestedButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
+            interestedButton.backgroundColor = .white
             interestedButton.isUserInteractionEnabled = true
         }
     }
@@ -93,6 +127,8 @@ class DetailViewController: UIViewController {
             interestedButton.setTitle("Already Interested", for: .normal)
             interestedButton.setTitleColor(.darkGray, for: .normal)
             interestedButton.isUserInteractionEnabled = false
+            post.interestedIds.append((FirebaseAuthHelper.getCurrentUser()?.uid)!)
+            interestedLabel.text = "Members Interested: " + String(describing: post.interestedIds.count)
         }
     }
 }
