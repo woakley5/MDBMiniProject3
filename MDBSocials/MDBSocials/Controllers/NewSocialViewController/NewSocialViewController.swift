@@ -8,30 +8,36 @@
 
 import UIKit
 import MKSpinner
+import SkyFloatingLabelTextField
 
 class NewSocialViewController: UIViewController {
-
-    var backgroundImage: UIImageView!
-    var backgroundBlur: UIVisualEffectView!
     
-    var eventNameField: UITextField!
-    var eventDescriptionView: UITextView!
-    var datePicker: UIDatePicker!
+    var firstBlockView: UIView!
+    var eventNameField: SkyFloatingLabelTextField!
+    var eventDescriptionField: SkyFloatingLabelTextField!
+    
+    var secondBlockView: UIView!
     var selectLibraryImageButton: UIButton!
     var selectCameraImageButton: UIButton!
     var selectedImageView: UIImageView!
+    
+    var thirdBlockView: UIView!
+    var datePicker: UIDatePicker!
+
     var submitButton: UIButton!
     
     var selectedImage: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
         setupNavigationBar()
-        setupBackground()
-        setupTextFields()
-        setupPictureSelection()
-        setupDatePicker()
-        setupSubmitButton()
+        setupFirstBlock()
+        setupSecondBlock()
+        setupThirdBlock()
     }
     
     func setupNavigationBar(){
@@ -41,58 +47,87 @@ class NewSocialViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         self.navigationItem.title = "New Post"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNewPost))
-    }
-    
-    func setupBackground(){
-        backgroundImage = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        backgroundImage.image = #imageLiteral(resourceName: "gradientLogo")
-        backgroundImage.contentMode = .scaleAspectFit
-        view.addSubview(backgroundImage)
         
-        backgroundBlur = UIVisualEffectView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        backgroundBlur.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        view.addSubview(backgroundBlur)
-    }
-    
-    func setupTextFields(){
-        eventNameField = UITextField(frame: CGRect(x: 30, y: 85, width: view.frame.width - 60, height: 40))
-        eventNameField.placeholder = "Event Name"
-        view.addSubview(eventNameField)
-        
-        eventDescriptionView = UITextView(frame: CGRect(x: 30, y: 150, width: view.frame.width - 60, height: 100))
-        eventDescriptionView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        view.addSubview(eventDescriptionView)
-    }
-    
-    func setupPictureSelection(){
-        selectCameraImageButton = UIButton(frame: CGRect(x: 30, y: 270, width: 150, height: 50))
-        selectCameraImageButton.setTitle("Take Picture", for: .normal)
-        selectCameraImageButton.setTitleColor(.blue, for: .normal)
-        selectCameraImageButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
-        view.addSubview(selectCameraImageButton)
-        
-        selectLibraryImageButton = UIButton(frame: CGRect(x: 30, y: 330, width: 150, height: 50))
-        selectLibraryImageButton.setTitle("Select Picture", for: .normal)
-        selectLibraryImageButton.setTitleColor(.blue, for: .normal)
-        selectLibraryImageButton.addTarget(self, action: #selector(selectPictureFromLibrary), for: .touchUpInside)
-        view.addSubview(selectLibraryImageButton)
-        
-        selectedImageView = UIImageView(frame: CGRect(x: view.frame.width/2, y: 250, width: view.frame.width/2 - 25, height: 150))
-        selectedImageView.contentMode = .scaleAspectFit
-        view.addSubview(selectedImageView)
-    }
-    
-    func setupDatePicker(){
-        datePicker = UIDatePicker(frame: CGRect(x: 30, y: view.frame.height * 0.6, width: view.frame.width - 60, height: 200))
-        view.addSubview(datePicker)
-    }
-    
-    func setupSubmitButton(){
-        submitButton = UIButton(frame: CGRect(x: 30, y: view.frame.height * 0.6 + 210, width: view.frame.width - 60, height: 50))
-        submitButton.setTitle("Submit", for: .normal)
-        submitButton.setTitleColor(.blue, for: .normal)
+        submitButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 30))
+        submitButton.setTitle("Submit!", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
         submitButton.addTarget(self, action: #selector(newPost), for: .touchUpInside)
-        view.addSubview(submitButton)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: submitButton)
+    }
+    
+    func setupFirstBlock(){
+        firstBlockView = UIView(frame: CGRect(x: 15, y: 85, width: view.frame.width - 30, height: 130))
+        firstBlockView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        firstBlockView.layer.cornerRadius = 10
+        view.addSubview(firstBlockView)
+        
+        eventNameField = SkyFloatingLabelTextField(frame: CGRect(x: 10, y: 10, width: firstBlockView.frame.width - 20, height: 40))
+        eventNameField.placeholder = "Event Name"
+        eventNameField.title = "Event Name"
+        eventNameField.textColor = .white
+        eventNameField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventNameField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventNameField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventNameField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        eventNameField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventNameField.tintColor = .white
+        firstBlockView.addSubview(eventNameField)
+        
+        eventDescriptionField = SkyFloatingLabelTextField(frame: CGRect(x: 10, y: 70, width: firstBlockView.frame.width - 20, height: 40))
+        eventDescriptionField.placeholder = "Event Description"
+        eventDescriptionField.title = "Event Description"
+        eventDescriptionField.textColor = .white
+        eventDescriptionField.placeholderColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventDescriptionField.lineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventDescriptionField.selectedTitleColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventDescriptionField.titleColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        eventDescriptionField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
+        eventDescriptionField.tintColor = .white
+        firstBlockView.addSubview(eventDescriptionField)
+    }
+    
+    func setupSecondBlock(){
+        secondBlockView = UIView(frame: CGRect(x: 15, y: 240, width: view.frame.width - 30, height: 200))
+        secondBlockView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        secondBlockView.layer.cornerRadius = 10
+        view.addSubview(secondBlockView)
+        
+        selectCameraImageButton = UIButton(frame: CGRect(x: secondBlockView.frame.width/2 + 20, y: 30, width: secondBlockView.frame.width/2 - 40, height: 50))
+        selectCameraImageButton.setTitle("Take Picture", for: .normal)
+        selectCameraImageButton.backgroundColor = .white
+        selectCameraImageButton.layer.cornerRadius = 10
+        selectCameraImageButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
+        selectCameraImageButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
+        secondBlockView.addSubview(selectCameraImageButton)
+        
+        selectLibraryImageButton = UIButton(frame: CGRect(x: secondBlockView.frame.width/2 + 20, y: 120, width: secondBlockView.frame.width/2 - 40, height: 50))
+        selectLibraryImageButton.setTitle("Select Picture", for: .normal)
+        selectLibraryImageButton.layer.cornerRadius = 10
+        selectLibraryImageButton.backgroundColor = .white
+        selectLibraryImageButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
+        selectLibraryImageButton.addTarget(self, action: #selector(selectPictureFromLibrary), for: .touchUpInside)
+        secondBlockView.addSubview(selectLibraryImageButton)
+        
+        selectedImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: secondBlockView.frame.width/2 - 20, height: secondBlockView.frame.height - 20))
+        selectedImageView.contentMode = .scaleAspectFit
+        selectedImageView.layer.cornerRadius = 10
+        selectedImageView.image = #imageLiteral(resourceName: "defaultImage")
+        secondBlockView.addSubview(selectedImageView)
+    }
+    
+    func setupThirdBlock(){
+        thirdBlockView = UIView(frame: CGRect(x: 10, y: 475, width: view.frame.width - 20, height: 200))
+        secondBlockView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        thirdBlockView.layer.cornerRadius = 10
+        view.addSubview(thirdBlockView)
+        
+        datePicker = UIDatePicker(frame: CGRect(x: 10, y: 10, width: thirdBlockView.frame.width - 20, height: thirdBlockView.frame.height - 20))
+        thirdBlockView.addSubview(datePicker)
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        eventNameField.resignFirstResponder()
+        eventDescriptionField.resignFirstResponder()
     }
     
     @objc func cancelNewPost() {
@@ -118,9 +153,9 @@ class NewSocialViewController: UIViewController {
     }
     
     @objc func newPost() {
-        if eventNameField.hasText && eventDescriptionView.hasText && selectedImage != nil {
+        if eventNameField.hasText && eventDescriptionField.hasText && selectedImage != nil {
             MKFullSpinner.show("Uploading Post", animated: true)
-            FirebaseDatabaseHelper.newPostWithImage(selectedImage: selectedImage, name: eventNameField.text!, description: eventDescriptionView.text, date: datePicker.date) {
+            FirebaseDatabaseHelper.newPostWithImage(selectedImage: selectedImage, name: eventNameField.text!, description: eventDescriptionField.text!, date: datePicker.date) {
                 MKFullSpinner.hide()
                 self.dismiss(animated: true, completion: {
                     print("Post Complete")

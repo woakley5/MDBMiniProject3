@@ -18,12 +18,17 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
+        setupTableView()
+    }
+    
+    func setupNavigationBar(){
         self.navigationItem.title = "My Feed"
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         let textAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-
+        
         logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 30))
         logoutButton.setTitle("Log Out", for: .normal)
         logoutButton.setTitleColor(.white, for: .normal)
@@ -31,14 +36,15 @@ class FeedViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newPost))
-        
+    }
+    
+    func setupTableView(){
         feedTableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         feedTableView.delegate = self
         feedTableView.dataSource = self
         feedTableView.separatorColor = .clear
         view.addSubview(feedTableView)
         feedTableView.register(FeedTableViewCell.self, forCellReuseIdentifier: "post")
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

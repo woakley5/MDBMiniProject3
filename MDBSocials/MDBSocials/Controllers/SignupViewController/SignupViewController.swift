@@ -25,13 +25,28 @@ class SignupViewController: UIViewController {
         
         view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
+        setupTitleLabel()
+        setupFullNameField()
+        setupUsernameField()
+        setupEmailField()
+        setupPasswordField()
+        setupSignupButton()
+        setupBackButton()
+    }
+    
+    func setupTitleLabel(){
         signupTitleLabel = UILabel(frame: CGRect(x: 30, y: 30, width: view.frame.width - 60, height: 80))
         signupTitleLabel.font = UIFont(name: "ArialRoundedMTBold", size: 45)
         signupTitleLabel.text = "Sign Up"
         signupTitleLabel.textColor = .white
         signupTitleLabel.textAlignment = .center
         view.addSubview(signupTitleLabel)
-
+    }
+    
+    func setupFullNameField(){
         fullNameField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 125, width: view.frame.width - 60, height: 40))
         fullNameField.placeholder = "Full Name"
         fullNameField.title = "Full Name"
@@ -43,7 +58,9 @@ class SignupViewController: UIViewController {
         fullNameField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
         fullNameField.tintColor = .white
         view.addSubview(fullNameField)
-        
+    }
+    
+    func setupUsernameField(){
         usernameField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 175, width: view.frame.width - 60, height: 40))
         usernameField.placeholder = "Username"
         usernameField.title = "Username"
@@ -55,7 +72,9 @@ class SignupViewController: UIViewController {
         usernameField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
         usernameField.tintColor = .white
         view.addSubview(usernameField)
-        
+    }
+    
+    func setupEmailField(){
         emailField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 225, width: view.frame.width - 60, height: 40))
         emailField.placeholder = "Email"
         usernameField.title = "Email"
@@ -67,7 +86,9 @@ class SignupViewController: UIViewController {
         emailField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
         emailField.tintColor = .white
         view.addSubview(emailField)
-        
+    }
+    
+    func setupPasswordField(){
         passwordField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 275, width: view.frame.width - 60, height: 40))
         passwordField.placeholder = "Password"
         passwordField.title = "Password"
@@ -80,7 +101,9 @@ class SignupViewController: UIViewController {
         passwordField.tintColor = .white
         passwordField.isSecureTextEntry = true
         view.addSubview(passwordField)
-        
+    }
+    
+    func setupSignupButton(){
         signUpButton = UIButton(frame: CGRect(x: view.frame.width/2 - 100, y: 375, width: 200, height: 60))
         signUpButton.setTitle("Create Account", for: .normal)
         signUpButton.backgroundColor = .white
@@ -88,7 +111,9 @@ class SignupViewController: UIViewController {
         signUpButton.addTarget(self, action: #selector(tappedCreateAccount), for: .touchUpInside)
         signUpButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(signUpButton)
-        
+    }
+    
+    func setupBackButton(){
         backButton = UIButton(frame: CGRect(x: view.frame.width/2 - 50, y: 450, width: 100, height: 60))
         backButton.setTitle("Cancel", for: .normal)
         backButton.backgroundColor = .white
@@ -96,6 +121,13 @@ class SignupViewController: UIViewController {
         backButton.addTarget(self, action: #selector(tappedBackButton), for: .touchUpInside)
         backButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(backButton)
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        fullNameField.resignFirstResponder()
+        usernameField.resignFirstResponder()
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
     }
     
     @objc func tappedCreateAccount(){

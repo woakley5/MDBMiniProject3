@@ -20,8 +20,34 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
         
+        self.navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
+        setupLogo()
+        setupEmailField()
+        setupPasswordField()
+        setupLogInButton()
+        setupMakeAccountButton()
+    }
+    
+    func setupLogo(){
+        logoImage = UIImageView(frame: CGRect(x: 20, y: 20, width: view.frame.width - 40, height: 300))
+        logoImage.contentMode = .scaleAspectFit
+        logoImage.image = #imageLiteral(resourceName: "whiteLogoOutline")
+        view.addSubview(logoImage)
+        
+        logoLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 40, y: 180, width: 220, height: 140))
+        logoLabel.text = "SOCIALS"
+        logoLabel.textColor = .white
+        logoLabel.font = UIFont(name: "ArialRoundedMTBold", size: 45)
+        view.addSubview(logoLabel)
+    }
+    
+    func setupEmailField(){
         emailField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 320, width: view.frame.width - 60, height: 40))
         emailField.placeholder = "Email"
         emailField.title = "Email"
@@ -33,7 +59,9 @@ class LoginViewController: UIViewController {
         emailField.selectedLineColor = #colorLiteral(red: 0.9885228276, green: 0.8447954059, blue: 0.2268863916, alpha: 1)
         emailField.tintColor = .white
         view.addSubview(emailField)
-        
+    }
+    
+    func setupPasswordField(){
         passwordField = SkyFloatingLabelTextField(frame: CGRect(x: 30, y: 390, width: view.frame.width - 60, height: 40))
         passwordField.placeholder = "Password"
         passwordField.title = "Password"
@@ -46,7 +74,9 @@ class LoginViewController: UIViewController {
         passwordField.tintColor = .white
         passwordField.isSecureTextEntry = true
         view.addSubview(passwordField)
-        
+    }
+    
+    func setupLogInButton(){
         logInButton = UIButton(frame: CGRect(x: 30, y: 500, width: view.frame.width/2 - 60, height: 60))
         logInButton.setTitle("Log In!", for: .normal)
         logInButton.backgroundColor = .white
@@ -54,7 +84,9 @@ class LoginViewController: UIViewController {
         logInButton.addTarget(self, action: #selector(tappedLogin), for: .touchUpInside)
         logInButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(logInButton)
-        
+    }
+    
+    func setupMakeAccountButton(){
         signUpButton = UIButton(frame: CGRect(x: view.frame.width/2 + 30, y: 500, width: view.frame.width/2 - 60, height: 60))
         signUpButton.setTitle("Sign Up!", for: .normal)
         signUpButton.backgroundColor = .white
@@ -62,19 +94,11 @@ class LoginViewController: UIViewController {
         signUpButton.addTarget(self, action: #selector(tappedSignUp), for: .touchUpInside)
         signUpButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         view.addSubview(signUpButton)
-        
-        view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-        
-        logoImage = UIImageView(frame: CGRect(x: 20, y: 20, width: view.frame.width - 40, height: 300))
-        logoImage.contentMode = .scaleAspectFit
-        logoImage.image = #imageLiteral(resourceName: "whiteLogoOutline")
-        view.addSubview(logoImage)
-        
-        logoLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 40, y: 180, width: 220, height: 140))
-        logoLabel.text = "SOCIALS"
-        logoLabel.textColor = .white
-        logoLabel.font = UIFont(name: "ArialRoundedMTBold", size: 45)
-        view.addSubview(logoLabel)
+    }
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
     }
     
     @objc func tappedLogin(){
